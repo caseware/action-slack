@@ -98,6 +98,7 @@ export class Client {
     const { owner, repo } = github.context.repo;
     const commit = await this.github.repos.getCommit({ owner, repo, ref: sha });
     const { author } = commit.data.commit;
+    console.log(this.workflow)
 
     return [
       /* this.repo,
