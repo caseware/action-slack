@@ -10402,6 +10402,7 @@ class Client {
             const { owner, repo } = github.context.repo;
             const commit = yield this.github.repos.getCommit({ owner, repo, ref: sha });
             const { author } = commit.data.commit;
+            console.log(this.workflow);
             return [
                 /* this.repo,
                 {
