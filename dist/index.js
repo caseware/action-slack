@@ -10375,8 +10375,11 @@ class Client {
     }
     payloadTemplate() {
         return __awaiter(this, void 0, void 0, function* () {
-            const text = this.mentionText(this.with.mention);
+            // const text = this.mentionText(this.with.mention);
+            const text = this.workflow.value;
             const { username, icon_emoji, icon_url, channel } = this.with;
+            const fields = yield this.fields();
+            const author_name = fields[3].value;
             return {
                 text,
                 username,
@@ -10386,8 +10389,8 @@ class Client {
                 attachments: [
                     {
                         color: '',
-                        author_name: this.with.author_name,
-                        fields: yield this.fields(),
+                        author_name: author_name,
+                        fields: [fields[2]],
                     },
                 ],
             };
@@ -10402,15 +10405,23 @@ class Client {
             const { owner, repo } = github.context.repo;
             const commit = yield this.github.repos.getCommit({ owner, repo, ref: sha });
             const { author } = commit.data.commit;
-            console.log(this.workflow);
             return [
-                /* this.repo,
+                this.repo,
                 {
-                  title: 'message',
-                  value: commit.data.commit.message,
-                  short: true,
-                }, */
+                    title: 'message',
+                    value: commit.data.commit.message,
+                    short: true,
+                },
                 this.commit,
+                {
+                    title: 'author',
+                    value: `${author.name}<${author.email}>`,
+                    short: true,
+                },
+                this.action,
+                this.eventName,
+                this.ref,
+                this.workflow,
             ];
         });
     }

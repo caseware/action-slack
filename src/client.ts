@@ -71,9 +71,11 @@ export class Client {
   }
 
   private async payloadTemplate() {
-    const text = this.mentionText(this.with.mention);
+    // const text = this.mentionText(this.with.mention);
+    const text = this.workflow.value;
     const { username, icon_emoji, icon_url, channel } = this.with;
-
+    const fields = await this.fields();
+    const author_name = fields[3].value;
     return {
       text,
       username,
@@ -83,8 +85,8 @@ export class Client {
       attachments: [
         {
           color: '',
-          author_name: this.with.author_name,
-          fields: await this.fields(),
+          author_name: author_name,
+          fields: [ fields[2] ],
         },
       ],
     };
@@ -98,17 +100,16 @@ export class Client {
     const { owner, repo } = github.context.repo;
     const commit = await this.github.repos.getCommit({ owner, repo, ref: sha });
     const { author } = commit.data.commit;
-    console.log(this.workflow)
 
     return [
-      /* this.repo,
+      this.repo,
       {
         title: 'message',
         value: commit.data.commit.message,
         short: true,
-      }, */
+      },
       this.commit,
-      /* {
+      {
         title: 'author',
         value: `${author.name}<${author.email}>`,
         short: true,
@@ -116,7 +117,7 @@ export class Client {
       this.action,
       this.eventName,
       this.ref,
-      this.workflow, */
+      this.workflow,
     ];
   }
 
