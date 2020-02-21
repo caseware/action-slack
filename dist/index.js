@@ -10343,6 +10343,7 @@ class Client {
             const template = yield this.payloadTemplate();
             template.attachments[0].color = 'good';
             template.text += ':white_check_mark: Succeeded GitHub Actions\n';
+            template.text += this.workflow.value + '\n';
             template.text += text;
             return template;
         });
@@ -10353,6 +10354,7 @@ class Client {
             template.attachments[0].color = 'danger';
             template.text += this.mentionText(this.with.only_mention_fail);
             template.text += ':no_entry: Failed GitHub Actions\n';
+            template.text += this.workflow.value + '\n';
             template.text += text;
             return template;
         });
@@ -10362,6 +10364,7 @@ class Client {
             const template = yield this.payloadTemplate();
             template.attachments[0].color = 'warning';
             template.text += ':warning: Canceled GitHub Actions\n';
+            template.text += this.workflow.value + '\n';
             template.text += text;
             return template;
         });
@@ -10375,8 +10378,7 @@ class Client {
     }
     payloadTemplate() {
         return __awaiter(this, void 0, void 0, function* () {
-            // const text = this.mentionText(this.with.mention);
-            const text = this.workflow.value;
+            const text = this.mentionText(this.with.mention);
             const { username, icon_emoji, icon_url, channel } = this.with;
             const fields = yield this.fields();
             const author_name = fields[3].value;

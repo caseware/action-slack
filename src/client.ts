@@ -40,6 +40,7 @@ export class Client {
     const template = await this.payloadTemplate();
     template.attachments[0].color = 'good';
     template.text += ':white_check_mark: Succeeded GitHub Actions\n';
+    template.text += this.workflow.value + '\n';
     template.text += text;
 
     return template;
@@ -50,6 +51,7 @@ export class Client {
     template.attachments[0].color = 'danger';
     template.text += this.mentionText(this.with.only_mention_fail);
     template.text += ':no_entry: Failed GitHub Actions\n';
+    template.text += this.workflow.value + '\n';
     template.text += text;
 
     return template;
@@ -59,6 +61,7 @@ export class Client {
     const template = await this.payloadTemplate();
     template.attachments[0].color = 'warning';
     template.text += ':warning: Canceled GitHub Actions\n';
+    template.text += this.workflow.value + '\n';
     template.text += text;
 
     return template;
@@ -71,8 +74,7 @@ export class Client {
   }
 
   private async payloadTemplate() {
-    // const text = this.mentionText(this.with.mention);
-    const text = this.workflow.value;
+    const text = this.mentionText(this.with.mention);
     const { username, icon_emoji, icon_url, channel } = this.with;
     const fields = await this.fields();
     const author_name = fields[3].value;
