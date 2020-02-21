@@ -100,14 +100,14 @@ export class Client {
     const { author } = commit.data.commit;
 
     return [
-      this.repo,
+      /* this.repo,
       {
         title: 'message',
         value: commit.data.commit.message,
         short: true,
-      },
+      }, */
       this.commit,
-      {
+      /* {
         title: 'author',
         value: `${author.name}<${author.email}>`,
         short: true,
@@ -115,7 +115,7 @@ export class Client {
       this.action,
       this.eventName,
       this.ref,
-      this.workflow,
+      this.workflow, */
     ];
   }
 
