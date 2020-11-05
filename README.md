@@ -32,7 +32,7 @@ You can learn more about it [here](https://action-slack.netlify.app/usecase/02-c
 
 ```yaml
 steps:
-  - uses: 8398a7/action-slack@v3
+  - uses: caseware/action-slack@v3
   with:
     status: custom
     fields: workflow,job,commit,repo,ref,author,took
