@@ -14,7 +14,7 @@ You can learn more about it [here](https://action-slack.netlify.app/usecase/01-g
 
 ```yaml
 steps:
-  - uses: 8398a7/action-slack@v3
+  - uses: caseware/action-slack@v3
     with:
       status: ${{ job.status }}
       fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
